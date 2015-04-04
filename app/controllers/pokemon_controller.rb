@@ -15,6 +15,7 @@ class PokemonController < ApplicationController
 	@pokemon.health = 100
 	@pokemon.level = 1
   
+  
     if @pokemon.save
       redirect_to(trainer_path(id: current_trainer.id))
     else
