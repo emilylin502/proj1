@@ -1,21 +1,21 @@
-class PokemonController < ApplicationController
-
-
-  def index
-    @pokemons = Pokemon.all
-  end
-
+class PokemonsController < ApplicationController
 
   def new
+  end 
 
+  
+  def capture
+    @pokemon = Pokemon.find(params[:id])
+    @pokemon.trainer = current_trainer
+    @pokemon.save
+    redirect_to(:back)
   end
+
   def create
     @pokemon = Pokemon.new(pokemon_params)
-	@pokemon.trainer = current_trainer
-	@pokemon.health = 100
-	@pokemon.level = 1
-  
-  
+    @pokemon.trainer_id = current_trainer.id
+    @pokemon.health = 100
+    @pokemon.level = 1
     if @pokemon.save
       redirect_to(trainer_path(id: current_trainer.id))
     else
@@ -25,26 +25,11 @@ class PokemonController < ApplicationController
   end
   
 
-  def capture
-    @pokemon = Pokemon.find(params[:id])
-    @pokemon.trainer = current_trainer
-    @pokemon.save
-    redirect_to(:back)
-  end
-
-
-
-
-
-
-
-
-
-
   def heal
     @pokemon = Pokemon.find(params[:id])
     if @pokemon.health <= 100
       @pokemon.health += 10
+    end
     @pokemon.save
     redirect_to(:back)
   end
@@ -70,8 +55,9 @@ class PokemonController < ApplicationController
 
   private
   def pokemon_params
-    params.require(:pokemon).permit(:name)
+    params.require(:pokemon).permit(:name, :trainer_id, :level, :health)
   end
+
 
 end
 
