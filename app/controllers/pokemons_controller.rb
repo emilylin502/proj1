@@ -27,16 +27,6 @@ class PokemonsController < ApplicationController
       redirect_to(trainer_path(id: current_trainer.id))
     end
   end
-  
-
-  def heal
-    @pokemon = Pokemon.find(params[:id])
-    if @pokemon.health <= 100
-      @pokemon.health += 10
-    end
-
-    redirect_to(:back)
-  end
 
 
 
@@ -58,6 +48,12 @@ class PokemonsController < ApplicationController
     pokemon.destroy
   end
 
+    def heal
+    @pokemon=Pokemon.find(params[:id])
+    @pokemon.health+=10
+    @pokemon.save
+    redirect_to trainer_path(@pokemon.trainer_id)
+  end
 
   private
   def pokemon_params
