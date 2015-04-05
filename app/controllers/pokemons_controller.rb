@@ -35,7 +35,6 @@ class PokemonsController < ApplicationController
     @pokemon.update_attribute(:health, (@pokemon.health.to_f - 10))
     @pokemon.save
     if @pokemon.health.to_f <= 0
-
       @pokemon.destroy
     end
 
@@ -50,9 +49,9 @@ class PokemonsController < ApplicationController
 
     def heal
     @pokemon=Pokemon.find(params[:id])
-    @pokemon.health+=10
+    @pokemon.update_attribute(:health, (@pokemon.health.to_f + 10))
     @pokemon.save
-    redirect_to trainer_path(@pokemon.trainer_id)
+    redirect_to(trainer_path(id: current_trainer.id))
   end
 
   private

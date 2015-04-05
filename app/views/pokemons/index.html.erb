@@ -1,4 +1,5 @@
 <% @pokemons.each do |pokemon| %>
   <%= link_to pokemon.name, damage_path(id: pokemon), :method => :patch %>
+  
   <br>
 <% end %>
