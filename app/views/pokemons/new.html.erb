@@ -1,6 +1,6 @@
 <h3>Create Your Pokemon!</h3>
-<%= simple_form_for  Pokemon.new, url: {action: "create"} do |f| %>
-  Name: <%= f.text_field :name %>
-  <%= f.submit "Create" %>
+<%= simple_form_for Pokemon.new, url: {action: "create"} do |f| %>
+  <%= f.input :name %>
+  <%= f.button :submit %>
 
  <% end %>

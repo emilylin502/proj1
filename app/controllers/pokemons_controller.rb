@@ -3,9 +3,13 @@ class PokemonsController < ApplicationController
   def new
   end 
 
-  
+  def index
+    @pokemons = Pokemon.all
+  end
+
   def capture
     @pokemon = Pokemon.find(params[:id])
+    pokemon_id = @pokemon.id
     @pokemon.trainer = current_trainer
     @pokemon.save
     redirect_to(:back)
@@ -30,23 +34,25 @@ class PokemonsController < ApplicationController
     if @pokemon.health <= 100
       @pokemon.health += 10
     end
-    @pokemon.save
+
     redirect_to(:back)
   end
 
 
 
-
-  def damage 
-    @pokemon = Pokemon.find(params[:id])
-    @pokemon.health = @pokemon.health - 10
+  def damage
+    @pokemon = Pokemon.find params[:id]
+    @pokemon.update_attribute(:health, (@pokemon.health.to_f - 10))
     @pokemon.save
-    redirect_to(trainer_path(current_trainer.id)) 
-    if @pokemon.health <= 0
+    if @pokemon.health.to_f <= 0
+
       @pokemon.destroy
     end
-    redirect_to(:back)
+
+    redirect_to trainer_path(current_trainer)
   end
+
+
 
   def destroy(pokemon)
     pokemon.destroy

@@ -1,5 +1,5 @@
-class AddHealthPokemon < ActiveRecord::Migration
+class AddHealthToPokemon < ActiveRecord::Migration
   def change
-  	add_column :pokemons, :health, :string
+    add_column :pokemons, :health, :int
   end
 end
